@@ -2,8 +2,8 @@
 ## 一、基本配置
 ### 采取springboot+mybatis框架
 ### pom.xml配置
-* <dependency>
-*     <groupId>org.mybatis.spring.boot</groupId>
+``` <dependency>```
+    <groupId>org.mybatis.spring.boot</groupId>
 *     <artifactId>mybatis-spring-boot-starter</artifactId>
 *     <version>2.0.0</version>
 * </dependency>
