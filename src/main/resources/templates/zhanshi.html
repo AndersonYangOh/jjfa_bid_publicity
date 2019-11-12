@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport"
+	content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+<link rel="stylesheet"
+	href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdn.bootcss.com/weui/1.1.3/style/weui.min.css">
+<link rel="stylesheet"
+	href="https://cdn.bootcss.com/jquery-weui/1.2.1/css/jquery-weui.min.css">
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script
+	src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- 如果使用了某些拓展插件还需要额外的JS -->
+<script src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/swiper.min.js"></script>
+<script
+	src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/city-picker.min.js"></script>
+
+<title>全国创新业务招标信息V1.20（精选）</title>
+</head>
+<style>
+* {
+	touch-action: pan-y;
+}
+
+body {
+	background-color: #f5f5f5;
+}
+
+h1 {
+	color: #000000;
+	font-size: 38px;
+	display: inline;
+	vertical-align: middle;
+}
+
+img {
+	height: 35px;
+}
+
+ul {
+	text-align: center;
+	width: 100%;
+}
+
+li {
+	height: 60px;
+	line-height: 60px;
+	float: left;
+	list-style: none;
+	width: 30%;
+	text-align: center;
+	border-radius: 7px;
+	background: #ffffff;
+	margin: 5px 5px;
+	font-size:20px;
+}
+
+.hidli {
+	background: #f5f5f5;
+}
+
+small {
+	font-size: 16px;
+	color: #999999;
+}
+</style>
+<script type="text/javascript">
+function getprovince(province){
+	alert("成功");
+}
+
+window.onload = function(){
+	var liNodes = document.getElementsByTagName("li");
+	for(var i = 0 ;i < liNodes.length; i++){
+	liNodes[i].onclick = function(){
+		if(this.firstChild!=null&&this.firstChild.nodeValue!=null){
+	//var province=this.firstChild.nodeValue;
+	var province=this.getAttribute("data-info-type");	
+	//window.location.href='/biddetail?starttime='+[[${starttime}]]+'&endtime='+[[${endtime}]]+'&province='+province;
+	window.location.href='/weixinbid/biddetail?starttime='+[[${starttime}]]+'&endtime='+[[${endtime}]]+'&province='+province;
+		}
+	}
+	}
+}
+</script>
+<script type="text/javascript">
+
+function search(){
+	var sttime=document.getElementById("begintime").value;
+	var e=document.getElementById("endtime").value;
+	var d=DateMinus(sttime,e);
+	//console.log(d);
+	if(d>=0&&d<=10){
+	sttime=sttime.replace(/\-/g,'');
+	sttime=sttime.substring(0,8)+"000000";
+	e=e.replace(/\-/g,"");
+	e=e.substring(0,8)+"000000";
+	//window.location.href='/jietu?starttime='+sttime+'&endtime='+e;
+	window.location.href='/weixinbid/jietu?starttime='+sttime+'&endtime='+e;
+     }else{
+    	 $.alert("日期相差不能超过10天");
+     }
+	
+}
+ $(function(){
+	var isfirst=true;
+	var start=''+[[${starttime}]];
+	st=start.substring(0,4)+'-'+start.substring(4,6)+'-'+start.substring(6,8);
+	var end =''+[[${endtime}]];
+	e=end.substring(0,4)+'-'+end.substring(4,6)+'-'+end.substring(6,8);
+document.getElementById("begintime").value = st;
+document.getElementById("endtime").value = e;
+$("#begintime").calendar({
+	value:[st],
+	dateFormat:'yyyy-mm-dd'
+}
+		);
+$("#endtime").calendar({
+	value:[e],
+	dateFormat:'yyyy-mm-dd'
+}
+		);
+
+$("#endtime").change(function(){
+	if(isfirst){
+		isfirst=false;
+	}else{
+	//console.log(document.getElementById("endtime").value);
+	search();
+	}
+});
+
+ });
+
+function DateMinus(date1,date2){//date1:小日期   date2:大日期
+	  　　var sdate = new Date(date1); 
+	  　　var now = new Date(date2); 
+	  　　var days = now.getTime() - sdate.getTime(); 
+	  　　var day = parseInt(days / (1000 * 60 * 60 * 24)); 
+	  　　return day; 
+	  }
+</script>
+<body>
+	<div style="background-color: #ffffff; height: 100px;">
+		<p
+			style="font-size: 18px; padding: 20px 10px 0px 10px; font-weight: bold;">日期筛选</p>
+		<div
+			style="padding: 0px 5px 10px 5px; background-color: #ffffff; margin-bottom: 50px; text-align: center">
+
+			 <input type="text" class="weui-input" id='begintime'
+				style="border: 0px; text-align: left; width: 45%; font-size: 14px; background-color: #f5f5f5; height: 40px; text-align: center; color: Silver" />
+			- <input type="text" class="weui-input" id='endtime' name='endtime'
+				style="border: 0px; text-align: right; width: 45%; font-size: 14px; background-color: #f5f5f5; height: 40px; text-align: center; color: Silver" />
+
+		</div>
+	</div>
+	 
+	<!--<p style="border: 0px; float: left; width: 20%; font-size: 14px; color: Silver">起止日期</p>  
+	<a href="javascript:search();"
+		class="weui-btn weui-btn_plain-default weui-btn_plain-disabled">查询</a>-->
+	<div style="margin-left: 10px">
+		<img th:src="@{/img/06.png}" style="vertical-align: middle">
+		<h1>中央</h1>
+	</div>
+	<div style="background-color: #f5f5f5;margin-left: 10px">
+		<ul>
+			<li data-info-type="中央">中央&nbsp;&nbsp;&nbsp;<small th:text="${zy}">0</small></li>
+			<li class="hidli"></li>
+			<li class="hidli" style="margin-bottom: 50px"></li>
+		</ul>
+	</div>
+	<div style="width:200px;margin-left: 10px">
+		<img th:src="@{/img/01.png}" style="vertical-align: middle">
+		<h1>东北</h1>
+	</div>
+	<div style="background-color: #f5f5f5;margin-left: 10px">
+		<ul>
+			<li data-info-type="黑龙江">黑龙江&nbsp;&nbsp;&nbsp;<small th:text="${hlj}">0</small></li>
+			<li data-info-type="辽宁">辽宁&nbsp;&nbsp;&nbsp;<small th:text="${ln}">0</small></li>
+			<li style="margin-bottom: 50px" data-info-type="吉林">吉林&nbsp;&nbsp;&nbsp;<small
+				th:text="${jl}">0</small></li>
+		</ul>
+	</div>
+	<div style="width:200px;margin-left: 10px">
+		<img th:src="@{/img/02.png}" style="vertical-align: middle">
+		<h1>华东</h1>
+	</div>
+	<div style="background-color: #f5f5f5;margin-left: 10px">
+		<ul>
+			<li data-info-type="上海">上海&nbsp;&nbsp;&nbsp;<small th:text="${sh}">0</small></li>
+			<li data-info-type="江苏">江苏&nbsp;&nbsp;&nbsp;<small th:text="${js}">0</small></li>
+			<li data-info-type="浙江">浙江&nbsp;&nbsp;&nbsp;<small th:text="${zj}">0</small></li>
+		</ul>
+	</div>
+	<div style="background-color: #f5f5f5;margin-left: 10px">
+		<ul>
+			<li data-info-type="安徽">安徽&nbsp;&nbsp;&nbsp;<small th:text="${ah}">0</small></li>
+			<li data-info-type="福建">福建&nbsp;&nbsp;&nbsp;<small th:text="${fj}">0</small></li>
+			<li data-info-type="江西">江西&nbsp;&nbsp;&nbsp;<small th:text="${jx}">0</small></li>
+		</ul>
+	</div>
+	<div style="background-color: #f5f5f5;margin-left: 10px">
+		<ul>
+			<li data-info-type="山东">山东&nbsp;&nbsp;&nbsp;<small th:text="${sd}">0</small></li>
+			<li class="hidli"></li>
+			<li class="hidli" style="margin-bottom: 50px"></li>
+		</ul>
+	</div>
+	<div style="width:200px;margin-left: 10px">
+		<img th:src="@{/img/03.png}" style="vertical-align: middle">
+		<h1>华北</h1>
+	</div>
+	<div style="background-color: #f5f5f5;margin-left: 10px">
+		<ul>
+			<li data-info-type="北京">北京&nbsp;&nbsp;&nbsp;<small th:text="${bj}">0</small></li>
+			<li data-info-type="天津">天津&nbsp;&nbsp;&nbsp;<small th:text="${tj}">0</small></li>
+			<li data-info-type="河北">河北&nbsp;&nbsp;&nbsp;<small th:text="${heb}">0</small></li>
+		</ul>
+	</div>
+	<div style="background-color: #f5f5f5;margin-left: 10px">
+		<ul>
+			<li data-info-type="山西">山西&nbsp;&nbsp;&nbsp;<small th:text="${sx}">0</small></li>
+			<li data-info-type="内蒙古">内蒙古&nbsp;&nbsp;&nbsp;<small th:text="${nmg}">0</small></li>
+			<li class="hidli" style="margin-bottom: 50px"></li>
+		</ul>
+	</div>
+	<div style="width:200px;margin-left: 10px">
+		<img th:src="@{/img/04.png}" style="vertical-align: middle">
+		<h1>中南</h1>
+	</div>
+	<div style="background-color: #f5f5f5;margin-left: 10px">
+		<ul>
+			<li data-info-type="河南">河南&nbsp;&nbsp;&nbsp;<small th:text="${hen}">0</small></li>
+			<li data-info-type="湖北">湖北&nbsp;&nbsp;&nbsp;<small th:text="${hb}">0</small></li>
+			<li data-info-type="湖南">湖南&nbsp;&nbsp;&nbsp;<small th:text="${hun}">0</small></li>
+		</ul>
+	</div>
+	<div style="background-color: #f5f5f5;margin-left: 10px">
+		<ul>
+			<li data-info-type="广东">广东&nbsp;&nbsp;&nbsp;<small th:text="${gd}">0</small></li>
+			<li data-info-type="广西">广西&nbsp;&nbsp;&nbsp;<small th:text="${gx}">0</small></li>
+			<li style="margin-bottom: 50px" data-info-type="海南">海南&nbsp;&nbsp;&nbsp;<small
+				th:text="${hain}">0</small></li>
+		</ul>
+	</div>
+	<div style="width:200px;margin-left: 10px">
+		<img th:src="@{/img/05.png}" style="vertical-align: middle">
+		<h1>西南</h1>
+	</div>
+	<div style="background-color: #f5f5f5;margin-left: 10px">
+		<ul>
+			<li data-info-type="重庆">重庆&nbsp;&nbsp;&nbsp;<small th:text="${cq}">0</small></li>
+			<li data-info-type="四川">四川&nbsp;&nbsp;&nbsp;<small th:text="${sc}">0</small></li>
+			<li data-info-type="贵州">贵州&nbsp;&nbsp;&nbsp;<small th:text="${gz}">0</small></li>
+		</ul>
+	</div>
+	<div style="background-color: #f5f5f5;margin-left: 10px">
+		<ul>
+			<li data-info-type="云南">云南&nbsp;&nbsp;&nbsp;<small th:text="${yn}">0</small></li>
+			<li data-info-type="西藏">西藏&nbsp;&nbsp;&nbsp;<small th:text="${xz}">0</small></li>
+			<li class="hidli" style="margin-bottom: 50px"></li>
+		</ul>
+	</div>
+	<div style="width:200px;margin-left: 10px">
+		<img th:src="@{/img/06.png}" style="vertical-align: middle">
+		<h1>西北</h1>
+	</div>
+	<div style="background-color: #f5f5f5;margin-left: 10px">
+		<ul>
+			<li data-info-type="陕西">陕西&nbsp;&nbsp;&nbsp;<small th:text="${shanx}">0</small></li>
+			<li data-info-type="甘肃">甘肃&nbsp;&nbsp;&nbsp;<small th:text="${gs}">0</small></li>
+			<li data-info-type="青海">青海&nbsp;&nbsp;&nbsp;<small th:text="${qh}">0</small></li>
+		</ul>
+	</div>
+	<div style="background-color: #f5f5f5;margin-left: 10px">
+		<ul>
+			<li data-info-type="宁夏">宁夏&nbsp;&nbsp;&nbsp;<small th:text="${nx}">0</small></li>
+			<li data-info-type="新疆">新疆&nbsp;&nbsp;&nbsp;<small th:text="${xj}">0</small></li>
+			<li class="hidli"></li>
+		</ul>
+	</div>
+	<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+	<script
+		src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/jquery-weui.min.js"></script>
+</body>
+</html>

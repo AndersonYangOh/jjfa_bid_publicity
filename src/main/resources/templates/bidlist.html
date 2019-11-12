@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>全国创新业务招标信息（精选）</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script
+	src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+body {
+	position: relative;
+}
+
+ul.nav-tabs {
+	left: 0;
+	top: 20px;
+	position: fixed;
+	background-color: #f5f5f5;
+	width: 20%;
+}
+
+.nav-tabs>li.active>a {
+	border: none;
+}
+
+li.active {
+	background-color: #ffffff;
+	border: none;
+}
+
+div.col-sm-9 div {
+	height: 100%;
+	font-size: 28px;
+}
+
+a {
+	color: #666666;
+}
+
+@media screen and (max-width: 810px) {
+	#beijing, #tianjin, #shanghai, #chongqin, #guangdong, #shandong, #fujian,
+		#jiangxi, #hubei, #jiangsu, #zhejiang, #henan, #hebei, #liaoning,
+		#jilin, #heilongjiang, #neimenggu, #shan1xi, #shan3xi, #sichuan,
+		#anhui, #yunnan, #hainan, #xinjiang, #xizang, #ningxia, #gansu,
+		#guangxi, #hunan, #guizhou, #qinghai {
+		margin-left: 20%;
+	}
+}
+
+.nav-stacked::-webkit-scrollbar {
+	display: none;
+}
+
+.div-a {
+	float: left;
+	width: 49%;
+	color: #999999;
+	height: 50px;
+}
+
+.div-b {
+	float: right;
+	width: 49%;
+	color: #999999;
+	height: 50px;
+}
+
+.div-date {
+	color: #999999;
+	height: 50px;
+	
+}
+
+.div-content {
+	margin: 0;
+	border: 0;
+	padding: 0;
+	height: 50px;
+	border-top:1px solid #ddd;
+}
+
+.div-type {
+	height: 50px;
+}
+
+.div-name {
+	height: 50px;
+	font-size: 28px;
+}
+</style>
+<script type="text/javascript">
+function changepage(url){
+	//alert("成功");
+	window.location.href=url;
+}
+$(function() {
+	$.ajax({
+		url:"/weixinbid/xinxi",
+		type:"GET",
+		data :{
+			starttime : [[${starttime}]],
+			endtime :[[${endtime}]]
+		},
+		dataType:'json',
+		success :function(data) {
+			if(data == '') { 
+			}else{
+				$.each(data,function(index,obj){
+					var list='<div class="div-content" '+ 'onclick="changepage(\''+obj.url+'\')"'+'><div class="div-name">'+obj.title+'</div><div class="div-type"><div class="div-a">行业分类：'+obj.name+'</div> <div class="div-b">业务分类:'+obj.aname+'</div> </div><div class="div-date">发布时间：'+obj.dtime.substring(0,4)+'-'+obj.dtime.substring(4,6)+'-'+obj.dtime.substring(6,8)+' '+obj.dtime.substring(8,10)+':'+obj.dtime.substring(10,12)+'</div></div>'
+					if(obj.province=='北京'){
+					$('#beijing').append(list);
+					}else if (obj.province=='天津') {
+						$('#tianjin').append(list);
+					} else if (obj.province=='上海') {
+						$('#shanghai').append(list);
+					} else if (obj.province=='重庆') {
+						$('#chongqin').append(list);
+					} else if (obj.province=='广东') {
+						$('#guangdong').append(list);
+					} else if (obj.province=='山东') {
+						$('#shandong').append(list);
+					} else if (obj.province=='福建') {
+						$('#fujian').append(list);
+					} else if (obj.province=='江西') {
+						$('#jiangxi').append(list);
+					} else if (obj.province=='湖北') {
+						$('#hubei').append(list);
+					} else if (obj.province=='江苏') {
+						$('#jiangsu').append(list);
+					} else if (obj.province=='浙江') {
+						$('#zhejiang').append(list);
+					} else if (obj.province=='河南') {
+						$('#henan').append(list);
+					} else if (obj.province=='河北') {
+						$('#hebei').append(list);
+					} else if (obj.province=='辽宁') {
+						$('#liaoning').append(list);
+					} else if (obj.province=='吉林') {
+						$('#jilin').append(list);
+					} else if (obj.province=='黑龙江') {
+						$('#heilongjiang').append(list);
+					} else if (obj.province=='内蒙古') {
+						$('#neimenggu').append(list);
+					} else if (obj.province=='山西') {
+						$('#shan1xi').append(list);
+					} else if (obj.province=='陕西') {
+						$('#shan3xi').append(list);
+					} else if (obj.province=='四川') {
+						$('#sichuan').append(list);
+					} else if (obj.province=='安徽') {
+						$('#anhui').append(list);
+					} else if (obj.province=='云南') {
+						$('#yunnan').append(list);
+					} else if (obj.province=='海南') {
+						$('#hainan').append(list);
+					} else if (obj.province=='新疆') {
+						$('#xinjiang').append(list);
+					} else if (obj.province=='西藏') {
+						$('#xizang').append(list);
+					} else if (obj.province=='宁夏') {
+						$('#ningxia').append(list);
+					} else if (obj.province=='甘肃') {
+						$('#gansu').append(list);
+					} else if (obj.province=='广西') {
+						$('#guangxi').append(list);
+					} else if (obj.province=='湖南') {
+						$('#hunan').append(list);
+					} else if (obj.province=='贵州') {
+						$('#guizhou').append(list);
+					} else if (obj.province=='青海') {
+						$('#qinghai').append(list);
+					}
+				})
+			}
+		},
+		error:function() {
+			 alert("参数有误!");
+		}
+	})
+});
+</script>
+</head>
+<body data-spy="scroll" data-target="#myScrollspy" data-offset="20">
+	<div class="container">
+		<div class="row">
+			<nav class="col-sm-3" id="myScrollspy">
+				<div class="container-fluid">
+					<div class="container-fluid">
+						<ul class="nav nav-tabs nav-stacked"
+							style="overflow: scroll; height: 100%">
+							<li class="active"><a href="#beijing">北京</a></li>
+							<li><a href="#tianjin">天津</a></li>
+							<li><a href="#shanghai">上海</a></li>
+							<li><a href="#chongqin">重庆</a></li>
+							<li><a href="#guangdong">广东</a></li>
+							<li><a href="#shandong">山东</a></li>
+							<li><a href="#fujian">福建</a></li>
+							<li><a href="#jiangxi">江西</a></li>
+							<li><a href="#hubei">湖北</a></li>
+							<li><a href="#jiangsu">江苏</a></li>
+							<li><a href="#zhejiang">浙江</a></li>
+							<li><a href="#henan">河南</a></li>
+							<li><a href="#hebei">河北</a></li>
+							<li><a href="#liaoning">辽宁</a></li>
+							<li><a href="#jilin">吉林</a></li>
+							<li><a href="#heilongjiang">黑龙江</a></li>
+							<li><a href="#neimenggu">内蒙古</a></li>
+							<li><a href="#shan1xi">山西</a></li>
+							<li><a href="#shan3xi">陕西</a></li>
+							<li><a href="#sichuan">四川</a></li>
+							<li><a href="#anhui">安徽</a></li>
+							<li><a href="#yunnan">云南</a></li>
+							<li><a href="#hainan">海南</a></li>
+							<li><a href="#xinjiang">新疆</a></li>
+							<li><a href="#xizang">西藏</a></li>
+							<li><a href="#ningxia">宁夏</a></li>
+							<li><a href="#gansu">甘肃</a></li>
+							<li><a href="#guangxi">广西</a></li>
+							<li><a href="#hunan">湖南</a></li>
+							<li><a href="#guizhou">贵州</a></li>
+							<li><a href="#qinghai">青海</a></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+			<div class="col-sm-9">
+				<div id="beijing"></div>
+				<div id="tianjin"></div>
+				<div id="shanghai"></div>
+				<div id="chongqin"></div>
+				<div id="guangdong"></div>
+				<div id="shandong"></div>
+				<div id="fujian"></div>
+				<div id="jiangxi"></div>
+				<div id="hubei"></div>
+				<div id="jiangsu"></div>
+				<div id="zhejiang"></div>
+				<div id="henan"></div>
+				<div id="hebei"></div>
+				<div id="liaoning"></div>
+				<div id="jilin"></div>
+				<div id="heilongjiang"></div>
+				<div id="neimenggu"></div>
+				<div id="shan1xi"></div>
+				<div id="shan3xi"></div>
+				<div id="sichuan"></div>
+				<div id="anhui"></div>
+				<div id="yunnan"></div>
+				<div id="hainan"></div>
+				<div id="xinjiang"></div>
+				<div id="xizang"></div>
+				<div id="ningxia"></div>
+				<div id="gansu"></div>
+				<div id="guangxi"></div>
+				<div id="hunan"></div>
+				<div id="guizhou"></div>
+				<div id="qinghai"></div>
+
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
