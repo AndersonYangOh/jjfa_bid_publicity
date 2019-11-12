@@ -1,7 +1,7 @@
 # 创新业务招投标宣传系统
 ## 一、基本配置
-* 采取springboot+mybatis框架
-* pom.xml配置
+### 采取springboot+mybatis框架
+### pom.xml配置
 * <dependency>
 *     <groupId>org.mybatis.spring.boot</groupId>
 *     <artifactId>mybatis-spring-boot-starter</artifactId>
@@ -11,7 +11,7 @@
 *     <groupId>mysql</groupId>
 *     <artifactId>mysql-connector-java</artifactId>
 * </dependency>
-# application.properties配置
+### application.properties配置
 * spring.datasource.url=jdbc:mysql://localhost:3306/weixinbid?useUnicode=true&characterEncoding=UTF-8
 * spring.datasource.username=自定义
 * spring.datasource.password=自定义
